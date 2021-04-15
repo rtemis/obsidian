@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% block article %}
+<h3>TOP SALES FROM {{anno}}</h3>
+<div class=topventas>
+	<table>
+		<tr>
+			<th>Year</th>
+			<th>Movie</th>
+			<th>Sales</th>
+		</tr>
+	{% for ventas in topVentas %}
+	<tr>
+		<td>{{ventas[0]}}</td>
+		<td>{{ ventas[1] }}</td>
+		<td>{{ventas[2]}}</td>
+	</tr>
+	{% endfor %}
+</table>
+</div>
+<h3>BILLBOARD</h3>
+<div class=movies>
+	{% for m in catalogue %}
+		<div class="movie-desc">
+			<a href={{ url_for('description', movieid=m[0], title=m[1]) }} method="post">
+			<img src={{ url_for('static', filename='images/pelis.jpg') }} alt={{ m[1] }}> </a>
+			{{ m[1] }}
+		</div>
+	{% endfor %}
+</div>
+{% endblock %}

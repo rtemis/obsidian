@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% block article %}
+	{% if leng > 0 %}
+		<div class="titles_table">
+			<table>
+					<tr>
+						<th>Movie</th>
+						<th>Price (Ud.)</th>
+						<th>Quantity</th>
+					</tr>
+			</table>
+		</div>
+		{% for m in cart %}
+			<form action={{url_for('remove_selected', peli=m[0], price=m[2])}} method=post>
+				<div class="cart-table">
+
+					<table>
+						<tr>
+							<td>{{ m[1] }}</td>
+							<td>{{ m[2] }}</td>
+							{%if username == None%}
+								<td>{{contador[m[3]]}}
+							{% else %}
+								<td>{{m[4]}}
+							{% endif %}
+							<td><input type="submit" name="checkbox" value="Remove One" onclick=></td>
+						</tr>
+					</table>
+
+				</div>
+			</form>
+		{% endfor %}
+		{%if username == None%}
+			<p><br>
+			<form onsubmit="must_login()">
+				<div class="cart-buttons">
+					<input type="submit" value="Buy Now">
+				</div>
+			</form >
+		{% else%}
+			<p><br>
+			<form action={{url_for('buy_now')}} method=post>
+				<div class="cart-buttons">
+					<input type="submit" value="Buy Now">
+				</div>
+			</form >
+		{% endif %}
+
+	{% else %}
+		<h2>You don't have any movies in your cart yet... Why don't you take a look?</h2>
+		{% for m in movies%}
+			<div class="movie-desc">
+				<a href={{ url_for('description', movieid=m[0], title=m[1]) }} method="post">
+				<img src={{ url_for('static', filename='images/pelis.jpg') }} alt={{ m[1] }}> </a>
+				{{ m[1] }}
+			</div>
+		{% endfor %}
+	{% endif %}
+{% endblock %}

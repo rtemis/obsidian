@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% block article %}
+	{% if registry == True %}
+		<h3>Registration Success!</h3><br>
+		<p>How about adding something new to your cart? Here are some suggestions...</p>
+		{% for m in movies%}
+			<div class="movie-desc">
+				<a href={{ url_for('description', title=m[1], movieid=m[0]) }} method="get">
+				<img src={{ url_for('static', filename='images/pelis.jpg') }} > </a>
+				{{ m[1] }}
+			</div>
+		{% endfor %}
+	{% else %}
+		<h3>Registration Error. Sorry, that user already exists...</h3>
+		Did you want to login?
+	{% endif %}
+{% endblock %}

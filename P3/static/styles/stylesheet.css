@@ -1,0 +1,278 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #FFFFFF;
+    background-image: radial-gradient(#FFFFFF,#8B2635);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+    background-color: #8B2635;
+    background-image: linear-gradient(rgb(0,10,90),#8B2635);
+    padding: 10px;
+    text-align: center;
+    color: #FFFFFF;
+	font: 20px sans-serif;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+	header h1 {
+		color: white;
+    	text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+	}
+
+	header img {
+		width: 50px;
+		height: 50px;
+		border-radius: 15px;
+	}
+
+section {
+	position: static;
+}
+
+footer {
+    background-color: #8B2635;
+    background-image: linear-gradient(#8B2635,rgb(0,10,90));
+    text-align: center;
+    color: #FFFFFF;
+	font: 15px sans-serif;
+	width: 100%;
+	position: relative;
+	bottom: 0;
+	left: 0;
+	padding: 10px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+form {
+	color: #FFFFFF;
+	text-align: left;
+	padding: 5px;
+}
+
+	form input[type=submit] {
+		cursor: pointer;
+	}
+
+table {
+	float: left;
+	width: 50%;
+	height: 50%;
+	text-align: left;
+}
+
+#hits {
+	display: inline-block;
+}
+
+.shopping {
+	width:30px;
+	height: 30px;
+	filter: invert(100%);
+}
+
+.article {
+	background-color: #FFFFFF;
+	padding: 10px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	float: left;
+	width: 80%;
+	height: 75vh;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+	.article h1 {
+		font: 40px Helvetica;
+	}
+
+  .article .topventas{
+    padding: : 25px;
+    margin-bottom: 10px;
+  }
+
+
+  .article .topventas:after {
+      content: "";
+      display: table;
+      clear: both;
+  }
+
+.cart-table {
+	height: 80%;
+	width: 100%;
+	overflow-y: scroll;
+	text-align: center;
+}
+
+	.cart-table table tr {
+
+		color: black ;
+
+}
+
+	.cart-table td{
+	width: 24%;
+}
+
+
+
+.titles_table{
+	width: 75%;
+}
+
+.form-prices{
+  color: black;
+  background-color: #c6c1c0;
+}
+
+
+.info img {
+	width: 60px;
+	height: 60px;
+	text-align: center;
+}
+
+.mini-nav-bar {
+	height: 40px;
+	background-image: linear-gradient(#F25757);
+	background-color: #F25757;
+	width: 100%;
+	color: #FFD9CE;
+}
+	.mini-nav-bar #username {
+		display: inline-block;
+		text-align: left;
+		font: 20px Helvetica;
+		padding: 5px 20px 20px 5px;
+	}
+
+	.mini-nav-bar .search-container {
+		display: inline-block;
+		float: right;
+	}
+
+	.mini-nav-bar input[type=text] {
+		padding: 5px;
+		font: 15px Helvetica;
+		border: none;
+	}
+
+.movie {
+	padding: 10px;
+	height: 100%;
+}
+
+	.movie img {
+		margin: 30px;
+		float: left;
+		width: 30%;
+	}
+
+.movie-desc {
+	float: left;
+	text-align: center;
+	margin: 15px;
+	font: 12px Arial;
+	width: 120px;
+	height: 210px;
+	text-decoration: none;
+	color: #38023B;
+	font-weight: bold;
+}
+
+	.movie-desc img {
+		width: 100px;
+		height: 150px;
+		border-radius: 15px;
+	}
+
+	.movie-desc:hover {
+		width: 130px;
+		height: 210px;
+		color: #F2F0F0;
+
+	}
+
+	.movie-desc:hover img{
+		width: 140px;
+		height: 230px;
+	}
+
+.nav {
+	background: #4F000B;
+	float: left;
+	width: 20%;
+	height: 75vh;
+    padding: 10px;
+	overflow: hidden;
+}
+
+	.nav ul {
+		list-style-type: none;
+		text-align: left;
+		padding: 5px;
+	}
+
+	.nav ul a {
+		color: #FFFFFF;
+		text-align: left;
+		font: 20px Helvetica;
+		text-decoration: none;
+		padding: 5px;
+	}
+
+	.nav ul a:hover{
+		color: #A40E4C;
+	}
+
+.register form {
+  padding: 10px;
+	color: #4F000B;
+}
+
+.section:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+}
+
+meter {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+
+  margin: 0 auto 1em;
+  width: 10%;
+  height: 0.5em;
+
+  background: none;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+meter::-webkit-meter-bar {
+  background: none;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+meter[value="1"]::-webkit-meter-optimum-value { background: red; }
+meter[value="2"]::-webkit-meter-optimum-value { background: yellow; }
+meter[value="3"]::-webkit-meter-optimum-value { background: orange; }
+meter[value="4"]::-webkit-meter-optimum-value { background: green; }
+
+meter[value="1"]::-moz-meter-bar { background: red; }
+meter[value="2"]::-moz-meter-bar { background: yellow; }
+meter[value="3"]::-moz-meter-bar { background: orange; }
+meter[value="4"]::-moz-meter-bar { background: green; }
+
+@media (max-width: 1023px) {
+  .nav {
+	width:200px;
+  }
+  .article{
+	width:calc(100% - 200px);
+  }
