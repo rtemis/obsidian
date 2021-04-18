@@ -15,3 +15,4 @@ pyzbar==0.1.8
 python-barcode==0.13.1
 Flask-QRcode==3.0.0
 barcode==1.0.1
+tkinter

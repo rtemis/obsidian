@@ -1,8 +1,17 @@
+import os
+import sys
+
+# this_dir = os.path.dirname(os.path.abspath(__file__))
+# activate_this = this_dir + '/obsidian/bin/activate_this.py'
+# execfile(activate_this, dict(__file__=activate_this))
+
+# # anhadir dir de este fichero a path
+# sys.path.insert(0, this_dir)
+
 from barcode import EAN13
 from pyzbar import pyzbar
 import cv2
 import qrcode
-
 from barcode.writer import ImageWriter
 
 # Basic barcode maker allows for the creation of barcode with 
