@@ -19,7 +19,7 @@ def db_getClients():
         db_conn = db_engine.connect()
         
         # Query database for users
-        db_res = db_conn.execute("SELECT * from CLIENT_TABLE")
+        db_res = db_conn.execute("SELECT * from client_table")
         db_res = db_res.fetchall()
         db_conn.close()
 
@@ -30,7 +30,7 @@ def db_getClients():
         if db_conn is not None:
             db_conn.close()
         
-        print ("****** Table error: CLIENT_TABLE ******")
+        print ("****** Table error: client_table ******")
         print (error)
         
         return None
@@ -44,7 +44,7 @@ def db_getClients(name):
         db_conn = db_engine.connect()
         
         # Query database for users
-        db_res = db_conn.execute("SELECT * from CLIENT_TABLE WHERE ")
+        db_res = db_conn.execute("SELECT * from client_table WHERE first_name = (%s) OR last_name = (%s) OR client_id = (%s)", (name,))
         db_res = db_res.fetchall()
         db_conn.close()
 
@@ -62,11 +62,51 @@ def db_getClients(name):
 
 @dispatch()
 def db_getItems():
-    pass
+    try:
+        # Connect to Database
+        db_conn = None
+        db_conn = db_engine.connect()
+        
+        # Query database for users
+        db_res = db_conn.execute("SELECT * from products_table")
+        db_res = db_res.fetchall()
+        db_conn.close()
+
+        return  list(db_res)
+
+    except exc.SQLAlchemyError as error:
+        # Connection error
+        if db_conn is not None:
+            db_conn.close()
+        
+        print ("****** Table error: products_table ******")
+        print (error)
+        
+        return None
 
 @dispatch(string)
-def db_getItemsWith(query):
-    pass
+def db_getItems(query):
+    try:
+        # Connect to Database
+        db_conn = None
+        db_conn = db_engine.connect()
+        
+        # Query database for users
+        db_res = db_conn.execute("SELECT * from products_table WHERE product_id=%s OR product_name=%s OR product_desc")
+        db_res = db_res.fetchall()
+        db_conn.close()
+
+        return  list(db_res)
+
+    except exc.SQLAlchemyError as error:
+        # Connection error
+        if db_conn is not None:
+            db_conn.close()
+        
+        print ("****** Table error: client_table ******")
+        print (error)
+        
+        return None
 
 def db_getClients():
     pass
