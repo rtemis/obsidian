@@ -1,3 +1,5 @@
+import string
+
 from sqlalchemy import create_engine, func, exc
 from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
 from sqlalchemy.sql import select
@@ -10,6 +12,27 @@ import random
 # Configure database engine
 db_engine = create_engine("postgresql://alumnodb:alumnodb@localhost/si1", echo=False)
 db_meta = MetaData(bind=db_engine)
+
+def db_create_sys_user(firstname, lastname, password):
+    try:
+        # Connect to Database
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        # Insert into database
+        db_conn.execute("INSERT INTO employee_table (firstname, lastname, password) VALUES (%s, %s, %s)", (firstname, lastname, password,))
+        db_conn.close()
+
+        return None
+
+    except exc.SQLAlchemyError as error:
+        # Connection error
+        if db_conn is not None:
+            db_conn.close()
+
+        print("****** Table error: employee_table ******")
+        print(error)
+        return None
 
 @dispatch()
 def db_getClients():

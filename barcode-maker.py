@@ -62,3 +62,4 @@ def read_barcode(frame):
     return frame
 
 make_barcode('1234567891023',png=True)
+make_qrcode('https://gihub.com')
