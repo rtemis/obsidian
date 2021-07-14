@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>{% block title %} {{ title }} {% endblock %}</title>
+	<link rel="stylesheet" href={{ url_for('static', filename='style/stylesheet.css') }}>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<header>
+		<a href={{ url_for('index') }}> <img src={{ url_for('static', filename='images/Antonio-Group-logo.png')}} alt="Home"></a>
+	</header>
+
+	<div class="mini-nav-bar">
+		<div class="search-container">
+			<form action={{ url_for('results') }} method="post">
+				<select name="select">
+					<option value="#"> --- </option>
+					{% for g in genres %}
+				  <option value={{ g[1] }} name={{ g[1] }}>{{ g[1] }}</option>
+					{% endfor %}
+				</select>
+				<input type="text"  placeholder="Search.." name="search" >
+				<input type="submit" value = "Search">
+			</form>
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="article">
+			{% block article %}	{% endblock %}
+		</div>
+	</div>
+
+	<footer>
+		Copyright Antonio Group 2019 © All rights reserved.
+	</footer>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% block article %}
+	{% if not search %}
+		<img class="info" src={{ url_for('static', filename='images/info-bubble.png')}}>
+		<h3>Sorry, your search does not match anything in our database. Try searching for something else...</h3>
+	{% else %}
+		{% for i in search %}
+			<div class="movie-desc">
+				<a href={{ url_for('description', itemid=i[0], name=i[1]) }} method="post">
+				<img src={{ url_for('static', filename='images/pelis.jpg') }} alt={{ i[1] }}> </a>
+				{{ i[1] }}
+			</div>
+		{% endfor %}
+
+{% endblock %}
