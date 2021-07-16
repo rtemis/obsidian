@@ -1,42 +1,101 @@
 from http import cookies as Cookie
 
-vacio = False
-buysuccess = 0
-cookiexists = False
-anno = 0
+cookieexists = False
 user = False
 
+##############################
+#       Cookie values        #
+##############################
 
-# Create new user
-def setusername(firstname, lastname, customerid):
+# Create new user session
+def set_user_cookie(firstname, lastname, employeeid):
     global user
     user = True
     global session
-    session['username'] = username
-    session['customerid'] = customerid
+    session['user'] = firstname + ' ' + lastname
+    session['employeeid'] = employeeid
     global cookie
     cookie = Cookie.SimpleCookie()
-    cookie['user'] = username
-    global cookiexists
-    cookiexists = True
+    cookie['user'] = firstname + ' ' + lastname
+    global cookieexists
+    cookieexists = True
 
 
-def getcookie():
-    if cookiexists == True:
-        return str(cookie['user'].value)
+# Get current cookie user value
+def get_cookie():
+    if cookieexists == True:
+        user = str(cookie['user'].value)
     else:
-        a = ""
-        return a
+        user = ""
+    return user
+
+##############################
+#       Employee values      #
+##############################
+
+# Get Employee ID of current user
+def get_employeeid():
+    return session.get('employeeid')
 
 
-def getcustomerid():
-    return session.get('customerid')
+# Get name of user in session
+def get_user_name():
+    return session.get('user')
 
 
-def getusername():
-    return session.get('username')
-
-
-def getuser():
+# Get cookie value
+def get_user_session():
     global user
     return user
+
+
+def clear_cookie():
+    global cookieexists
+    global cookie
+
+    if cookieexists:
+        cookie = None
+        cookieexists = False
+
+
+###############################
+#       Cart functions        #
+###############################
+
+# Create the empty cart value for the seller
+def set_cart():
+    global empty
+    empty = True
+    global session
+    session['cart'] = []
+
+
+# Add the new item to the cart
+def add_cart(itemid, stockid):
+    global session
+    # Create item locator
+    item = {"itemid": itemid, "stockid": stockid}
+    # Add item to cart
+    session['cart'].append(item)
+
+
+# Remove an item from the cart
+def del_cart(itemid, stockid):
+    global session
+    # Create the item locator
+    item = {"itemid": itemid, "stockid": stockid}
+    # Remove item from cart
+    session['cart'].remove(item)
+
+
+# Create a new cart
+def clean_cart():
+    global session
+    session.pop('cart')
+    set_cart()
+
+
+# Get the current cart
+def get_cart():
+    return session.get('cart')
+

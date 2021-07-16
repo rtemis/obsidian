@@ -73,5 +73,22 @@ def results():
 def cart():
     pass
 
+
+@app.route("/~", methods=['POST', 'GET'])
+def user():
+    c = get_cookie()
+    username = request.form['user']
+    password = request.form['password']
+
+    loginsuccess = database.db_login(username, password)
+
+    if loginsuccess == True:
+        employeeid = database.db_getEmployeeID(username)
+        set_user_cookie()
+
+    return render_template('index.html', title="Index", username=username, loginsuccess = loginsuccess, cookie=c)
+
+
+
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=True)
