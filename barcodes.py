@@ -42,24 +42,37 @@ def make_qrcode(website, name='qrcode001.png', version=1, box_size=10, border=5)
     img.save('qrcode001.png')
 
 
-def read_barcode(frame):
-    barcodes = pyzbar.decode(frame)
-    for barcode in barcodes:
-        x, y , w, h = barcode.rect        
+def read_barcode():
+    cap = cv2.VideoCapture(0)
+    cap.set(3, 640)
+    cap.set(4, 480)
+
+    while True:
+        suc, frame = cap.read()
+        barcodes = pyzbar.decode(frame)
+        for barcode in barcodes:
+            print(barcode.type)
+            print(barcode.data.decode('utf-8'))
+
+        cv2.imshow('TestScan', frame)
+        cv2.waitKey(1)
+
+        # x, y, w, h = barcode.rect
         
-        #1
-        barcode_info = barcode.data.decode('utf-8')
-        cv2.rectangle(frame, (x, y),(x+w, y+h), (0, 255, 0), 2)
-        
-        #2
-        font = cv2.FONT_HERSHEY_DUPLEX
-        cv2.putText(frame, barcode_info, (x + 6, y - 6), font, 2.0, (255, 255, 255), 1)        
+        # #1
+        # barcode_info = barcode.data.decode('utf-8')
+        # cv2.rectangle(frame, (x, y),(x+w, y+h), (0, 255, 0), 2)
+        #
+        # #2
+        # font = cv2.FONT_HERSHEY_DUPLEX
+        # cv2.putText(frame, barcode_info, (x + 6, y - 6), font, 2.0, (255, 255, 255), 1)
         
         #3
-        with open("barcode_result.txt", mode ='w') as file:
-            file.write("Recognized Barcode:" + barcode_info)    
+        # with open("barcode_result.txt", mode ='w') as file:
+        #     file.write("Recognized Barcode:" + barcode_info)
             
     return frame
 
 make_barcode('1234567891023',png=True)
 make_qrcode('https://gihub.com')
+read_barcode()
