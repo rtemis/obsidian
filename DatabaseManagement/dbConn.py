@@ -10,7 +10,7 @@ import random
 
 
 # Configure database engine
-db_engine = create_engine("postgresql://alumnodb:alumnodb@localhost/si1", echo=False)
+db_engine = create_engine("postgresql://obsidianmaster:obsidian01@obsidian01.comafcefofso.eu-west-1.rds.amazonaws.com", echo=False)
 db_meta = MetaData(bind=db_engine)
 
 
@@ -253,13 +253,13 @@ def db_insert_item(stockid, name, itemtype,	description, imgurl, buyprice, sellp
                         (stockid, name, itemtype,	description, imgurl, buyprice, sellprice, discount))
 
         if itemtype is "WATN" or itemtype is "WATL":
-            insert_watch(db_conn)
+            insert_watch(db_conn, stockid)
 
         elif itemtype is "JWLL" or itemtype is "JWLF":
-            insert_jewellery(db_conn)
+            insert_jewellery(db_conn, stockid)
 
         else:
-            insert_gift(db_conn)
+            insert_gift(db_conn, stockid)
 
         db_conn.close()
 
@@ -274,10 +274,14 @@ def db_insert_item(stockid, name, itemtype,	description, imgurl, buyprice, sellp
         print(error)
         return None
 
-def insert_watch(db_conn):
+def insert_watch(db_conn, stockid):
     pass
 
-def insert
+def insert_jewellery(db_conn, stockid):
+    pass
+
+def insert_gift(db_conn, stockid):
+    pass
 
 
 def db_insert_watch(db_conn, stockid, clockwork, calibre, casematerial, caseshape, casewidth, casedepth, glasstype, dial, dialcolour, bracelet, clasp, features, batterycharge, service, diamondsnumber, diamondscarat, diamondsquality, numbercoloured, colours):
@@ -290,3 +294,7 @@ def db_insert_watch(db_conn, stockid, clockwork, calibre, casematerial, caseshap
         (stockid, clockwork, calibre, casematerial, caseshape, casewidth, casedepth,
          glasstype, dial, dialcolour, bracelet, clasp, features, batterycharge, service, diamondsnumber,
          diamondscarat, diamondsquality, numbercoloured, colours,))
+
+
+def abc():
+    pass

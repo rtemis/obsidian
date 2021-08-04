@@ -8,7 +8,7 @@ import datetime
 import psycopg2
 from flask import Flask, render_template, request, url_for, redirect, session
 import unicodedata
-import Cookie
+from http import cookies as Cookie
 
 import database
 
@@ -227,9 +227,9 @@ def add_to_cart():
 	username = getusername()
 	#usuario no logueado
 	if username == None:
-		print username
+		print (username)
 		if vacio == False:
-			print 'False'
+			print ('False')
 			setcart()
 		movie=database.db_getMovie(movieid)
 		movie.append(price)
@@ -409,7 +409,7 @@ def user_test():
         movies.append(random.choice(catalogue))
     #De momento dejamos esta linea para que el hisotrial no explote
     if not os.path.isdir(os.path.join(app.root_path,'users/'+username+'/')):
-        os.makedirs(os.path.join(app.root_path,'users/'+username+'/'), 0777)
+        os.makedirs(os.path.join(app.root_path,'users/'+username+'/'), 0o777)
 
     genres = database.db_genres()
     return render_template('user_test.html', registry=registry, movies=movies,username=username, user=getuser(), loginsuccess = True, message=0, cookie=c, genres=genres)

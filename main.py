@@ -88,6 +88,11 @@ def user():
 
     return render_template('index.html', title="Index", username=username, loginsuccess = loginsuccess, cookie=c)
 
+@app.route("/new_item", methods=['POST', 'GET'])
+def new_item():
+    c = get_cookie()
+
+
 
 
 if __name__ == "__main__":
