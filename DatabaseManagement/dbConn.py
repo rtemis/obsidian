@@ -8,9 +8,14 @@ import os
 import hashlib
 import random
 
+insertItem = """INSERT INTO items_table """
+insertWatch = """INSERT INTO """
+insertJewellery = """INSERT INTO """
+insertGift = """INSERT INTO """
 
 # Configure database engine
-db_engine = create_engine("postgresql://obsidianmaster:obsidian01@obsidian01.comafcefofso.eu-west-1.rds.amazonaws.com", echo=False)
+db_engine = create_engine("postgresql://obsidianmaster:obsidian01@obsidian01.comafcefofso.eu-west-1.rds.amazonaws.com",
+                          echo=False)
 db_meta = MetaData(bind=db_engine)
 
 
@@ -72,7 +77,7 @@ def db_getClients():
         # Connect to Database
         db_conn = None
         db_conn = db_engine.connect()
-        
+
         # Query database for users
         db_res = db_conn.execute("SELECT * from client_table")
         db_res = db_res.fetchall()
@@ -84,12 +89,12 @@ def db_getClients():
         # Connection error
         if db_conn is not None:
             db_conn.close()
-        
+
         print("****** Table error: client_table ******")
         print(error)
-        
+
         return None
-    
+
 
 @dispatch(str)
 def db_getClients(name):
@@ -97,9 +102,10 @@ def db_getClients(name):
         # Connect to Database
         db_conn = None
         db_conn = db_engine.connect()
-        
+
         # Query database for users
-        db_res = db_conn.execute("SELECT * from client_table WHERE first_name = (%s) OR last_name = (%s) OR client_id = (%s)", (name,))
+        db_res = db_conn.execute(
+            "SELECT * from client_table WHERE first_name = (%s) OR last_name = (%s) OR client_id = (%s)", (name,))
         db_res = db_res.fetchall()
         db_conn.close()
 
@@ -109,7 +115,7 @@ def db_getClients(name):
         # Connection error
         if db_conn is not None:
             db_conn.close()
-        
+
         print("****** Table error: client_table ******")
         print(error)
 
@@ -150,23 +156,24 @@ def db_getItems():
         # Connect to Database
         db_conn = None
         db_conn = db_engine.connect()
-        
+
         # Query database for users
         db_res = db_conn.execute("SELECT * from items_table")
         db_res = db_res.fetchall()
         db_conn.close()
 
-        return  list(db_res)
+        return list(db_res)
 
     except exc.SQLAlchemyError as error:
         # Connection error
         if db_conn is not None:
             db_conn.close()
-        
+
         print("****** Table error: items_table ******")
         print(error)
-        
+
         return None
+
 
 @dispatch(str)
 def db_getItems(query):
@@ -174,22 +181,22 @@ def db_getItems(query):
         # Connect to Database
         db_conn = None
         db_conn = db_engine.connect()
-        
+
         # Query database for users
         db_res = db_conn.execute("SELECT * from items_table WHERE itemid=%s OR name=%s OR description", (query,))
         db_res = db_res.fetchall()
         db_conn.close()
 
-        return  list(db_res)
+        return list(db_res)
 
     except exc.SQLAlchemyError as error:
         # Connection error
         if db_conn is not None:
             db_conn.close()
-        
-        print ("****** Table error: items_table ******")
-        print (error)
-        
+
+        print("****** Table error: items_table ******")
+        print(error)
+
         return None
 
 
@@ -241,7 +248,7 @@ def db_getItemDetails(itemid):
         return None
 
 
-def db_insert_item(stockid, name, itemtype,	description, imgurl, buyprice, sellprice, discount):
+def db_insert_item(stockid, name, itemtype, description, imgurl, buyprice, sellprice, discount):
     try:
         # Connect to Database
         db_conn = None
@@ -250,19 +257,35 @@ def db_insert_item(stockid, name, itemtype,	description, imgurl, buyprice, sellp
         # Insert into database
         db_conn.execute("INSERT INTO items_table (stockid, name, itemtype,	description, imgurl, buyprice, sellprice, "
                         "discount) VALUES (%s, %s, %s, %s, %s, %2f, %2f, %2f)",
-                        (stockid, name, itemtype,	description, imgurl, buyprice, sellprice, discount))
+                        (stockid, name, itemtype, description, imgurl, buyprice, sellprice, discount))
 
-        if itemtype is "WATN" or itemtype is "WATL":
-            insert_watch(db_conn, stockid)
+        return db_conn
 
-        elif itemtype is "JWLL" or itemtype is "JWLF":
-            insert_jewellery(db_conn, stockid)
+    except exc.SQLAlchemyError as error:
+        # Connection error
+        if db_conn is not None:
+            db_conn.close()
 
-        else:
-            insert_gift(db_conn, stockid)
+        print("****** Table error: items_table ******")
+        print(error)
+        return None
+
+
+def db_insert_watch(db_conn, stockid, clockwork, calibre, casematerial, caseshape, casewidth, casedepth, glasstype,
+                    dial, dialcolour, bracelet, clasp, features, batterycharge, service, diamondsnumber, diamondscarat,
+                    diamondsquality, numbercoloured, colours):
+    try:
+        # Insert into database
+        db_conn.execute(
+            "INSERT INTO watches_table (stockid, clockwork, calibre, casematerial, caseshape, casewidth, casedepth,"
+            " glasstype, dial, dialcolour, bracelet, clasp, features, batterycharge, service, diamondsnumber, "
+            "diamondscarat, diamondsquality, numbercoloured, colours) "
+            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d, %d, %d, %s, %d, %s)",
+            (stockid, clockwork, calibre, casematerial, caseshape, casewidth, casedepth,
+             glasstype, dial, dialcolour, bracelet, clasp, features, batterycharge, service, diamondsnumber,
+             diamondscarat, diamondsquality, numbercoloured, colours,))
 
         db_conn.close()
-
         return None
 
     except exc.SQLAlchemyError as error:
@@ -274,27 +297,68 @@ def db_insert_item(stockid, name, itemtype,	description, imgurl, buyprice, sellp
         print(error)
         return None
 
-def insert_watch(db_conn, stockid):
-    pass
 
-def insert_jewellery(db_conn, stockid):
-    pass
+def db_insert_jewellery(db_conn, stockid, design, clasptype, chainlength, ringsize, ringwidth, colour, clarity, cut,
+                        quality, material, materialgroup, alloy, unitweight):
+    try:
+        # Insert into database
+        db_conn.execute("INSERT INTO jewellery_table (stockid, design, clasptype, chainlength, ringsize, ringwidth, "
+                        "colour, clarity, cut, quality, material, materialgroup, alloy, unitweight) "
+                        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                        (stockid, design, clasptype, chainlength, ringsize, ringwidth, colour, clarity, cut,
+                         quality, material, materialgroup, alloy, unitweight,))
+        db_conn.close()
+        return None
 
-def insert_gift(db_conn, stockid):
-    pass
+    except exc.SQLAlchemyError as error:
+        # Connection error
+        if db_conn is not None:
+            db_conn.close()
+
+        print("****** Table error: items_table ******")
+        print(error)
+        return None
 
 
-def db_insert_watch(db_conn, stockid, clockwork, calibre, casematerial, caseshape, casewidth, casedepth, glasstype, dial, dialcolour, bracelet, clasp, features, batterycharge, service, diamondsnumber, diamondscarat, diamondsquality, numbercoloured, colours):
-    # Insert into database
-    db_conn.execute(
-        "INSERT INTO watches_table (stockid, clockwork, calibre, casematerial, caseshape, casewidth, casedepth,"
-        " glasstype, dial, dialcolour, bracelet, clasp, features, batterycharge, service, diamondsnumber, "
-        "diamondscarat, diamondsquality, numbercoloured, colours) "
-        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d, %d, %d, %s, %d, %s)",
-        (stockid, clockwork, calibre, casematerial, caseshape, casewidth, casedepth,
-         glasstype, dial, dialcolour, bracelet, clasp, features, batterycharge, service, diamondsnumber,
-         diamondscarat, diamondsquality, numbercoloured, colours,))
+def db_insert_gift(db_conn, stockid, articlegroup, articlekind, brand, productline, collection):
+    try:
+        # Insert into database
+        db_conn.execute("""INSERT INTO gift_table (stockid, articlegroup, articlekind, brand, productline, 
+        collection) VALUES (%s, %s, %s, %s, %s, %s)""", (stockid, articlegroup, articlekind, brand, productline, collection,))
+        db_conn.close()
+        return None
 
+    except exc.SQLAlchemyError as error:
+        # Connection error
+        if db_conn is not None:
+            db_conn.close()
 
-def abc():
-    pass
+        print("****** Table error: items_table ******")
+        print(error)
+        return None
+
+#################################################
+#               STATISTICS MODULE
+#################################################
+def db_get_day_sales(date):
+    # TODO: Add sales for each item and profits
+    try:
+        # Connect to Database
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        # Query database for item
+        db_res = db_conn.execute("SELECT COUNT(*) from history_table WHERE movementdate=%s AND description=SALE", date)
+        db_res = db_res.fetchall()
+        db_conn.close()
+
+        return list(db_res)
+
+    except exc.SQLAlchemyError as error:
+        # Connection error
+        if db_conn is not None:
+            db_conn.close()
+
+        print("****** Table error: items_table ******")
+        print(error)
+        return None
