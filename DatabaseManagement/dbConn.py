@@ -14,7 +14,7 @@ insertJewellery = """INSERT INTO """
 insertGift = """INSERT INTO """
 
 # Configure database engine
-db_engine = create_engine("postgresql://obsidianmaster:obsidian01@obsidian01.comafcefofso.eu-west-1.rds.amazonaws.com",
+db_engine = create_engine("postgresql://obsidianmaster:obsidianmaster@ec2-18-202-225-42.eu-west-1.compute.amazonaws.com/obsidiandb",
                           echo=False)
 db_meta = MetaData(bind=db_engine)
 
