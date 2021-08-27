@@ -362,3 +362,26 @@ def db_get_day_sales(date):
         print("****** Table error: items_table ******")
         print(error)
         return None
+
+def db_get_total_sales():
+    # TODO: Add sales for each item and profits
+    try:
+        # Connect to Database
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        # Query database for number of items
+        db_res = db_conn.execute("SELECT COUNT(*) from history_table WHERE description=SALE")
+        db_res = db_res.fetchall()
+        db_conn.close()
+
+        return list(db_res)
+
+    except exc.SQLAlchemyError as error:
+        # Connection error
+        if db_conn is not None:
+            db_conn.close()
+
+        print("****** Table error: items_table ******")
+        print(error)
+        return None

@@ -28,7 +28,8 @@ except ImportError as e:
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", genres=["Fashion Jewellery", "Luxury Jewellery", "Gifts", "Normal Watches", "Luxury Watches"])
+
 
 
 @app.route("/about")
@@ -71,7 +72,7 @@ def description():
 def results():
     search = request.form['search']
 
-    movies = database.db_search(search)
+    #movies = database.db_search(search)
 
     return render_template("search_results.html", search=search)
 
@@ -110,7 +111,7 @@ def new_item():
     discount = 0.0
 
     db_conn = database.db_insert_item(stockid, name, itemtype, description, imgurl, buyprice, sellprice, discount)
-    if itemtype is "WATN" or itemtype is "WATL":
+    if itemtype == "WATN" or itemtype == "WATL":
         clockwork = request.form['clockwork']
         calibre = request.form['calibre']
         casematerial = request.form['casematerial']
@@ -136,7 +137,7 @@ def new_item():
                                  diamondsnumber,
                                  diamondscarat, diamondsquality, numbercoloured, colours)
 
-    elif itemtype is "JWLL" or itemtype is "JWLF":
+    elif itemtype == "JWLL" or itemtype == "JWLF":
         # Basic jewellery details
         design = request.form['design']
         clasptype = request.form['clasptype']
